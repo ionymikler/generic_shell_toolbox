@@ -1,0 +1,5 @@
+# Generic Shell Toolbox
+Nice little collection of shell tools for the everyday dev
+
+## Installation
+1. run `./install.sh` to install the toolbox. It will:

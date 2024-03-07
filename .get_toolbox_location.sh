@@ -5,6 +5,7 @@
 
 main(){
     script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+    echo "Toolbox location: $script_dir"
     echo "export GENERIC_SHELL_TOOLBOX_LOCATION=$script_dir" > $script_dir/.env
 
 }
