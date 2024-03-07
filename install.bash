@@ -4,7 +4,7 @@
 
 bash .get_toolbox_location.sh
 if [ -f .env ]; then
-    cat .env >> ~/.bashrc
+    cat generic_shell_toolbox >> ~/.bashrc
 fi
 
 source ~/.bashrc
