@@ -1,11 +1,12 @@
 
 function verify_env_file(){
-    # check if '.env' file exists, is so source it, if not echo an error message
+    # checks if '.env' file exists, is so source it, if not echo an error message
+
     script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
     if [ -f "${script_dir}/.env" ]; then
         source "${script_dir}/.env"
     else
-        echo "Error The .env file does not exist, please run the '.get_toolbox_location.sh' script"
+        echo "Error .env '${script_dir}/.env' file does not exist, please run the '.get_toolbox_location.sh' script"
         return 1
     fi
 }

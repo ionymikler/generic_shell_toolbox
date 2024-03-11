@@ -2,11 +2,18 @@
 # Created by: Jonathan Mikler
 # Creation Date: 29/February/24
 
-bash .get_toolbox_location.sh
-if [ -f .env ]; then
-    cat generic_shell_toolbox >> ~/.bashrc
-fi
 
-source ~/.bashrc
+main(){
+    bash .make_env_file.sh
+    if [ -f .env ]; then
+        source "${GENERIC_SHELL_TOOLBOX_LOCATION}/.env"
+        echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> ~/.bashrc
+    fi
 
-echo "Installation complete."
+    source ~/.bashrc
+
+    echo "Installation complete."
+}
+
+main
+
