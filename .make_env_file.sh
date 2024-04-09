@@ -15,10 +15,12 @@ main(){
 
         if [ "$replace_env" == "y" ]; then
             echo "export GENERIC_SHELL_TOOLBOX_LOCATION=$script_dir" > "$script_dir/.env"
+            source "$script_dir/.env"
             echo "The .env file has been replaced."
         fi
     else
         echo "export GENERIC_SHELL_TOOLBOX_LOCATION=$script_dir" > "$script_dir/.env"
+        source "$script_dir/.env"
         echo "The .env file has been created."
     fi
 }
