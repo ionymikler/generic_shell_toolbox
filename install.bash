@@ -8,7 +8,7 @@ main(){
     # if [ -f "./.env" ]; then
     #     source "./.env"
     #     echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> ~/.bashrc
-    fi
+    # fi
 
     # source ~/.bashrc
 
