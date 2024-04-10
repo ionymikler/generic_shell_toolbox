@@ -5,14 +5,14 @@
 
 main(){
     bash .make_env_file.sh
-    if [ -f "./.env" ]; then
-        source "./.env"
-        echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> ~/.bashrc
+    # if [ -f "./.env" ]; then
+    #     source "./.env"
+    #     echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> ~/.bashrc
     fi
 
-    source ~/.bashrc
+    # source ~/.bashrc
 
-    echo "Installation complete."
+    echo "Installation complete. remember to add the 'generic_shell_toolbox.sh' to your bashrc file."
 }
 
 main
