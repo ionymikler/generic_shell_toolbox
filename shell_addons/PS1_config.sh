@@ -21,7 +21,7 @@ main(){
     local GIT_BRANCH_COLOR="${RED}"
     local GIT_REPO_COLOR="${DARK_RED}"
 
-    export PS1="$PS1${GIT_REPO_COLOR}(\$(get_repository_name):${GIT_BRANCH_COLOR}$(parse_git_branch))${NO_COLOR} \n> "
+    export PS1="$PS1${GIT_REPO_COLOR}(\$(get_repository_name):${GIT_BRANCH_COLOR}\$(parse_git_branch))${NO_COLOR} \n> "
 
 }
 
