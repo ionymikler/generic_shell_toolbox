@@ -24,7 +24,6 @@ function add_to_bashrc(){
         echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> ~/.bashrc
         echo "The 'generic_shell_toolbox.sh' has been added to your bashrc file. Open a new terminal to see the changes."
     fi
-    printf "Installation complete.\n"
 }
 
 main(){
