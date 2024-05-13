@@ -3,7 +3,7 @@ NC='\033[0m'
 # GREEN_TXT='\e[0;32m'
 GREEN_TXT2='\e[32m'
 # DARK_GREEN_TXT='\e[2;32m'
-# WHITE_TXT='\e[1;37m'
+WHITE_TXT='\e[1;37m'
 RED_TXT='\e[31m'
 # DIM_RED_TXT='\e[2;31m'
 LIGHT_BLUE_TXT='\e[96m'
@@ -20,6 +20,10 @@ YELLOW_TXT='\e[93m'
 # BOLDWHITE="\033[1m\033[37m"   # /* Bold White */
 
 function log_info() {
+    printf "${WHITE_TXT}$@${NC}\n"
+}
+
+function log_info_blue() {
     printf "${LIGHT_BLUE_TXT}$@${NC}\n"
 }
 
