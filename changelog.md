@@ -10,3 +10,4 @@
 
 # 1.0.3
 * option to source the toolbox to bashrc from install script
+* 
