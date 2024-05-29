@@ -3,7 +3,7 @@
 
 
 SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-source "${SCRIPT_DIR}/utils_source.sh"
+source "${SCRIPT_DIR}/colored_shell.sh"
 
 function delete_text_from_file(){
     local _text=$1
