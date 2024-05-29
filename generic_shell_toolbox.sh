@@ -7,7 +7,7 @@ function verify_env_file(){
         source "${script_dir}/.env"
         
     else
-        echo "Error .env '${script_dir}/.env' file does not exist, please run the '.get_toolbox_location.sh' script"
+        echo "Error .env '${script_dir}/.env' file does not exist."
         return 1
     fi
 }
