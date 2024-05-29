@@ -5,6 +5,8 @@
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source "${SCRIPT_PATH}/shell_utils/colored_shell.sh"
 
+source "${SCRIPT_PATH}/.make_env_file.sh"
+
 function set_PS1(){
     # decide if including a default PS1 configuration
     read -p "Do you want to include a default PS1 configuration? (y/n): " include_PS1
@@ -29,7 +31,7 @@ function add_to_bashrc(){
 main(){
     log_info_blue "Installing the 'generic_shell_toolbox'... \n"
 
-    bash .make_env_file.sh
+    make_env_file
 
     set_PS1
     add_to_bashrc

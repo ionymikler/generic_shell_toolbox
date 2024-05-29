@@ -3,7 +3,7 @@
 
 # INFO: gets the absolute path of the 'generic_shell_toolbox' directory and writes it to a .env file inside of it
 
-main(){
+function make_env_file(){
     printf "Creating the .env file... \n"
     script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
     printf "Toolbox location: ${script_dir}\n"
@@ -24,6 +24,5 @@ main(){
         echo "The .env file has been updated."
     fi
     echo ""
-}
 
-main
+}
