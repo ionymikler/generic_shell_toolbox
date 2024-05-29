@@ -10,4 +10,9 @@
 
 # 1.0.3
 * option to source the toolbox to bashrc from install script
-* 
+
+# 1.0.4
+* enable/disable
+* uninstall capacity
+* installation enabled
+* gst_* commands started
