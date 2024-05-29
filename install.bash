@@ -25,7 +25,9 @@ function add_to_bashrc(){
 }
 
 install_gst(){
-    log_info_blue "Installing the 'generic_shell_toolbox'... \n"
+    # read version from dir_path/version.yaml
+    local _version=$(cat "${SCRIPT_PATH}/version.yaml")
+    log_info_blue "Installing the 'generic_shell_toolbox' $_version... \n"
 
     make_env_file
 
