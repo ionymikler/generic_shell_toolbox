@@ -1,8 +1,10 @@
 # Define colors:
 NC='\033[0m'
-# GREEN_TXT='\e[0;32m'
+GREEN_TXT='\e[0;32m'
 GREEN_TXT2='\e[32m'
-# DARK_GREEN_TXT='\e[2;32m'
+LIGHT_GREEN_TXT='\e[92m'
+DARK_GREEN_TXT='\e[2;32m'
+
 WHITE_TXT='\e[1;37m'
 RED_TXT='\e[31m'
 # DIM_RED_TXT='\e[2;31m'
@@ -20,7 +22,7 @@ YELLOW_TXT='\e[93m'
 # BOLDWHITE="\033[1m\033[37m"   # /* Bold White */
 
 function log_info() {
-    printf "${WHITE_TXT}$@${NC}\n"
+    printf "$@\n"
 }
 
 function log_info_blue() {
@@ -59,4 +61,8 @@ function log_info_important() {
 
 function log_error() {
     printf "${RED_TXT}$@${NC}\n"
+}
+
+function log_debug() {
+    printf "${LIGHT_GREEN_TXT}$@${NC}\n"
 }

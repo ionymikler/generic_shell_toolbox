@@ -43,7 +43,7 @@ function source_toolbox(){
     source "${GENERIC_SHELL_TOOLBOX_LOCATION}/shell_addons/addons_source.sh"
 }
 
-main(){
+gst_main(){
     # script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
     # enable_toolbox $script_dir
 
@@ -54,8 +54,9 @@ main(){
     # if TOOLBOX_ENABLED is set to 'true' source the rest of the toolbox
     if [ "${TOOLBOX_ENABLED}" == "true" ]; then
         source_toolbox
+        log_info "Generic-Shell-ToolBox enabled"
     fi
 
 }
 
-main
+gst_main # Issue #5
