@@ -14,6 +14,7 @@ function gst_version(){
 
 
 function rebash(){
-    log_info 'resourcing ~/.bashrc'
-    source "~/.bashrc"
+    local bashrc_file="${HOME}/.bashrc"
+    log_info "Sourcing ${bashrc_file}"
+    source "${bashrc_file}"
 }
