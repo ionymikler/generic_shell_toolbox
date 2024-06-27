@@ -17,9 +17,14 @@ function source_core(){
     source "${GENERIC_SHELL_TOOLBOX_LOCATION}/enabling.sh"
 }
 
+
 function source_toolbox(){
     source "${GENERIC_SHELL_TOOLBOX_LOCATION}/shell_utils/utils_source.sh"
     source "${GENERIC_SHELL_TOOLBOX_LOCATION}/shell_addons/addons_source.sh"
+}
+
+function source_extensions(){
+    source "${GENERIC_SHELL_TOOLBOX_LOCATION}/.extensions/extensions_source.sh"
 }
 
 gst_main(){
@@ -33,7 +38,8 @@ gst_main(){
     # if TOOLBOX_ENABLED is set to 'true' source the rest of the toolbox
     if [ "${TOOLBOX_ENABLED}" == "true" ]; then
         source_toolbox
-        log_info "Generic-Shell-ToolBox enabled"
+        source_extensions
+        log_info "[GST] ToolBox enabled"
     fi
 
 }
