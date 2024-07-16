@@ -21,8 +21,35 @@ YELLOW_TXT='\e[93m'
 # BOLDCYAN="\033[1m\033[36m"    # /* Bold Cyan */
 # BOLDWHITE="\033[1m\033[37m"   # /* Bold White */
 
+# Define colors dictionary:
+declare -A COLORS_MAP=(
+    ["red"]="\033[0;31m"
+    ["green"]="\033[0;32m"
+    ["yellow"]="\033[1;33m"
+    ["blue"]="\033[0;34m"
+)
+
+DEFAULT_COLOR=$LIGHT_BLUE_TXT
+
 function log_info() {
-    printf "$@\n"
+    printf "${DEFAULT_COLOR}$@${NC}\n"
+}
+
+function log_colored() {
+    local color=$1
+    shift
+    local color_code=${COLORS_MAP["${color}"]}
+    
+    if [[ -z $color_code ]]; then
+        printf "Invalid color: %s\n" "$color"
+        return 1
+    fi
+    
+    printf "${color_code}%s${NC}\n" "$@"
+}
+
+function log_white() {
+    printf "${WHITE_TXT}$@${NC}\n"
 }
 
 function log_info_blue() {
@@ -42,7 +69,7 @@ function log_info_green() {
 }
 
 function log_warn() {
-    printf "${YELLOW_TXT}$@${NC}\n"
+    printf "${YELLOW_TXT}WARNING. $@${NC}\n"
 }
 
 function log_info_important() {

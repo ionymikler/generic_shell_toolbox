@@ -33,7 +33,7 @@ gst_main(){
     # if TOOLBOX_ENABLED is set to 'true' source the rest of the toolbox
     if [ "${TOOLBOX_ENABLED}" == "true" ]; then
         source_toolbox
-        log_info "Generic-Shell-ToolBox enabled"
+        # log_info "Generic-Shell-ToolBox enabled"
     fi
 
 }
