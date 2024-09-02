@@ -16,3 +16,6 @@
 * uninstall capacity
 * installation enabled
 * gst_* commands started
+
+# 1.0.5
+* rebash function corrected
