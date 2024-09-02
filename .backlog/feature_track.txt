@@ -1,7 +1,10 @@
 BUGS
 date, summary, status
-09apr24, install script uses relative path for sourcing .env file, needs fixing, TODO
+---
+> 09apr24, install script uses relative path for sourcing .env file, needs fixing, TODO
 
 FEATURES
 date, summary, status
-09apr24, color of git features in shell should be selectable from config file out of a few options to account for overusage of one color, TODO
+---
+> 09apr24, color of git features in shell should be selectable from config file out of a few options to account for overusage of one color, TODO
+> 27Jun24; If the env file is generated automatically, write it in the file as a comment

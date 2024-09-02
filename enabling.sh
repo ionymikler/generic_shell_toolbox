@@ -13,11 +13,13 @@ function gst_enable(){
         # if the .env file exists, check if the TOOLBOX_ENABLED variable exists, if so, overwrite it to 'true'
         # If it does not exists, create it and set it to 'true'
 
+        local state='true'
+
         if [ -z "${TOOLBOX_ENABLED}" ]; then
             # echo "writing TOOLBOX_ENABLED=true to .env file"
-            echo "TOOLBOX_ENABLED=true" >> "$_env"
+            echo "TOOLBOX_ENABLED=$state" >> "$_env"
         else
-            sed -i 's/TOOLBOX_ENABLED=.*/TOOLBOX_ENABLED=true/' "$_env"
+            sed -i "s/TOOLBOX_ENABLED=.*/TOOLBOX_ENABLED=$state/" "$_env"
         fi
         echo "Generic-ToolBox enabled"
     else
@@ -44,6 +46,19 @@ function gst_disable(){
     source ~/.bashrc
 }
 
+function gst_sourcing(){
+    if [ "${TOOLBOX_ENABLED}" = "true" ]; then
+        export GST_SOURCE_FILE="$GENERIC_SHELL_TOOLBOX_LOCATION/generic_shell_toolbox.sh"
+    else
+        export GST_SOURCE_FILE=""
+    fi
+}
+
+function main(){
+    gst_sourcing
+}
+
+main
 # function run_command(){
 #     local _env=$1
 #     _commands=(
