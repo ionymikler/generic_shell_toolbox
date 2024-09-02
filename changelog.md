@@ -19,3 +19,6 @@
 
 # 1.0.5
 * rebash function corrected
+
+## 1.0.4.1
+* GST_SOURCE_FILE implemented for universal sourcing variable
