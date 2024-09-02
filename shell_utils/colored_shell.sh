@@ -5,7 +5,7 @@ GREEN_TXT2='\e[32m'
 LIGHT_GREEN_TXT='\e[92m'
 DARK_GREEN_TXT='\e[2;32m'
 
-WHITE_TXT='\e[1;37m'
+WHITE_TXT='\e[97m'
 RED_TXT='\e[31m'
 # DIM_RED_TXT='\e[2;31m'
 LIGHT_BLUE_TXT='\e[96m'
@@ -21,8 +21,16 @@ YELLOW_TXT='\e[93m'
 # BOLDCYAN="\033[1m\033[36m"    # /* Bold Cyan */
 # BOLDWHITE="\033[1m\033[37m"   # /* Bold White */
 
+# Default color is white
+export GST_DEFAULT_TEXT_COLOR="$WHITE_TXT"
+
 function log_info() {
-    printf "$@\n"
+    # BUG: White text does not come out right in the terminal
+    if [ "$GST_DEFAULT_TEXT_COLOR" = "$WHITE_TXT" ]; then
+        echo "$@"
+    else
+        printf "${GST_DEFAULT_TEXT_COLOR}$@${NC}\n"
+    fi
 }
 
 function log_info_blue() {
