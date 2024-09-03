@@ -123,8 +123,18 @@ function ros_ws_selected() {
 function cdws() {
     # TODO: Process arguments properly to cd into a given ws and, if -s given, source the <ws>/install/setup.bash
 
+    local SOURCE_AFTER_CD=false
+    local GIVEN_WS=''
 
-    if [ -z "$1" ]; then
+    if [[ ! -z "$1" && "$1" != "-s" ]]; then
+        GIVEN_WS="$1"
+    fi
+
+    if [[ "$@" == *"-s"* ]]; then
+        SOURCE_AFTER_CD=true
+    fi
+
+    if [ -z "$GIVEN_WS" ]; then
         if [ -z "$SELECTED_ROS_WS" ]; then
             log_error "No ROS ('SELECTED_ROS_WS') workspace selected."
             return 1
@@ -132,11 +142,15 @@ function cdws() {
         cd "$HOME/ws/$SELECTED_ROS_WS"
 
     else
-        if [ ! -d "$HOME/ws/$1" ]; then
-            log_error "ROS workspace '$HOME/ws/$1' does not exist."
+        if [ ! -d "$HOME/ws/$GIVEN_WS" ]; then
+            log_error "ROS workspace '$HOME/ws/$GIVEN_WS' does not exist."
             return 1
         fi
-        cd "$HOME/ws/$1"
+        cd "$HOME/ws/$GIVEN_WS"
+    fi
+
+    if $SOURCE_AFTER_CD; then
+        rsrc
     fi
 }
 
