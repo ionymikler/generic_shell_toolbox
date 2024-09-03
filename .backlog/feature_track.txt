@@ -8,3 +8,4 @@ date, summary, status
 ---
 > 09apr24, color of git features in shell should be selectable from config file out of a few options to account for overusage of one color, TODO
 > 27Jun24; If the env file is generated automatically, write it in the file as a comment
+> ros-extension functions should have a gst identifier to their name (fx. set_ros_ws -> gst ros set_ws)
