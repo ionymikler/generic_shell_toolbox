@@ -1,4 +1,4 @@
-# Generic Shell Toolbox (GST) [1.1.0]
+# Generic Shell Toolbox (GST) [1.1.1]
 Nice little collection of shell tools for the everyday dev
 
 # Installation
