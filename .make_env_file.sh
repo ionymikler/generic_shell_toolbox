@@ -5,6 +5,12 @@
 
 
 function make_env_file(){
+    local replace_env='n'
+    
+    if [[ "$@" == *"-y"* ]]; then
+        replace_env='y'
+    fi
+
     printf "Creating the .env file... \n"
     _script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
     _env_file_default_content="# This file is used to store environment variables for the 'generic_shell_toolbox' tool.
@@ -15,7 +21,10 @@ function make_env_file(){
     if [ -f "$_script_dir/.env" ]; then
         source "$_script_dir/.env"
         log_warn "file .env already exists in $_script_dir/.env"
-        read -p "* Replace existing env file '${_script_dir}'? (y/n): " replace_env
+
+        if [["$replace_env" == "n"]]; then
+            read -p "* Replace existing env file '${_script_dir}'? (y/n): " replace_env
+        fi
 
         if [ "$replace_env" == "y" ]; then
             echo "$_env_file_default_content" > "$_script_dir/.env"
