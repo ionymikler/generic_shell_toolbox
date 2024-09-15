@@ -27,3 +27,10 @@ Major
 
 Minor
 * GST_SOURCE_FILE implemented for universal sourcing variable
+
+### 1.1.1
+* command `cdws` now has a source flag (-s) for sourcing the ws after cd
+
+## 1.2.0
+Major
+* '-D' flag in installation script to bypass prompts
