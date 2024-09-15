@@ -2,7 +2,12 @@
 # Created by Jonathan Mikler on 29/February/24
 
 # INFO: gets the absolute path of the 'generic_shell_toolbox' directory and writes it to a .env file inside of it
-
+_script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+_env_file_default_content="# This file was automatically generated at install-time.
+DO NOT OVERWRITE!
+export GENERIC_SHELL_TOOLBOX_LOCATION=$_script_dir
+export TOOLBOX_ENABLED=true
+"
 
 function make_env_file(){
     local replace_env='n'
@@ -12,11 +17,6 @@ function make_env_file(){
     fi
 
     printf "Creating the .env file... \n"
-    _script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
-    _env_file_default_content="# This file is used to store environment variables for the 'generic_shell_toolbox' tool.
-    export GENERIC_SHELL_TOOLBOX_LOCATION=$_script_dir
-    export TOOLBOX_ENABLED=true
-    "
 
     if [ -f "$_script_dir/.env" ]; then
         source "$_script_dir/.env"
