@@ -38,3 +38,7 @@ Major
 ### 1.2.1
 Minor
 * Minor reformatting of the .env file at install-time
+
+### 1.2.2
+Minor
+* typo correction in .make_env ...
