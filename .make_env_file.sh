@@ -4,7 +4,7 @@
 # INFO: gets the absolute path of the 'generic_shell_toolbox' directory and writes it to a .env file inside of it
 _script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 _env_file_default_content="# This file was automatically generated at install-time.
-DO NOT OVERWRITE!
+# DO NOT OVERWRITE!
 export GENERIC_SHELL_TOOLBOX_LOCATION=$_script_dir
 export TOOLBOX_ENABLED=true
 "
