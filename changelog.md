@@ -34,3 +34,7 @@ Minor
 ## 1.2.0
 Major
 * '-D' flag in installation script to bypass prompts
+
+### 1.2.1
+Minor
+* Minor reformatting of the .env file at install-time
