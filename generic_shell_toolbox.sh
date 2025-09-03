@@ -28,9 +28,6 @@ function source_extensions(){
 }
 
 gst_main(){
-    # script_dir=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
-    # enable_toolbox $script_dir
-
     # select command between 'activate' and 'deactivate'
     verify_env_file
     source_core
@@ -39,7 +36,8 @@ gst_main(){
     if [ "${TOOLBOX_ENABLED}" == "true" ]; then
         source_toolbox
         source_extensions
-        log_info "[GST] ToolBox enabled"
+        local version=$(gst_version | grep "version:" | cut -d' ' -f2)
+        log_info "[GST] ToolBox (${version}) enabled"
     fi
 
 }

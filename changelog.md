@@ -46,3 +46,8 @@ Minor
 ### 1.2.3
 Minor
 * Installation script can be run now with flag `-D` for default and `-y` for promptless 
+* Version now appear in source message
+
+## 1.3.0
+Minor
+* Script `create_stable_tag.sh` for ease of tag release
