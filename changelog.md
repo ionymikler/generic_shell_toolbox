@@ -42,3 +42,7 @@ Minor
 ### 1.2.2
 Minor
 * typo correction in .make_env ...
+
+### 1.2.3
+Minor
+* Installation script can be run now with flag `-D` for default and `-y` for promptless 

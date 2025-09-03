@@ -23,14 +23,41 @@ function add_to_bashrc(){
     log_info_green "The 'generic_shell_toolbox.sh' has been added to your bashrc file. Open a new terminal to see the changes."
 }
 
+function show_help() {
+    echo "Generic Shell Toolbox Installation Script"
+    echo ""
+    echo "Usage: $0 [OPTIONS]"
+    echo ""
+    echo "Options:"
+    echo "  -h, --help    Show this help message and exit"
+    echo "  -y            Auto-answer 'yes' to all prompts (non-interactive mode)"
+    echo "  -D            Set default configuration (includes PS1 and bashrc integration)"
+    echo ""
+    echo "Examples:"
+    echo "  $0            # Interactive installation with prompts"
+    echo "  $0 -y         # Non-interactive installation, auto-yes to all"
+    echo "  $0 -D         # Install with default configuration"
+    echo "  $0 -y -D      # Non-interactive with default configuration"
+}
+
 install_gst(){
     local SET_DEFAULT_CONFIG='false'
+    local AUTO_YES='false'
+
+    # Check for help flag first
+    if [[ "$@" == *"-h"* ]] || [[ "$@" == *"--help"* ]]; then
+        show_help
+        return 0
+    fi
 
     log_debug "$@"
     if [[ "$@" == *"-D"* ]]; then
         SET_DEFAULT_CONFIG=true
     fi
-    log_debug "SET_DEFAULT_CONFIG: $SET_DEFAULT_CONFIG"
+    if [[ "$@" == *"-y"* ]]; then
+        AUTO_YES=true
+    fi
+    log_debug "SET_DEFAULT_CONFIG: $SET_DEFAULT_CONFIG, AUTO_YES: $AUTO_YES"
 
     # read version from dir_path/version.yaml
     local _version=$(cat "${SCRIPT_PATH}/version.yaml")
@@ -41,7 +68,7 @@ install_gst(){
     # decide if including a default PS1 configuration
     local include_PS1="n"
     
-    if [ "$SET_DEFAULT_CONFIG" == "true" ]; then
+    if [ "$SET_DEFAULT_CONFIG" == "true" ] || [ "$AUTO_YES" == "true" ]; then
         include_PS1="y"
     else
         read -p "* Do you want to include a default PS1 configuration? (y/n): " include_PS1
@@ -53,7 +80,7 @@ install_gst(){
     # decide if adding the 'generic_shell_toolbox.sh' to the bashrc file
     local paste_to_bashrc="n"
     
-    if [ "$SET_DEFAULT_CONFIG" == "true" ]; then
+    if [ "$SET_DEFAULT_CONFIG" == "true" ] || [ "$AUTO_YES" == "true" ]; then
         paste_to_bashrc="y"
     else
         read -p "* Do you want to add the 'generic_shell_toolbox.sh' to your bashrc file? (y/n): " paste_to_bashrc

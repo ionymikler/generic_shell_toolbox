@@ -18,13 +18,8 @@ Similarly, to re-enable it run:
 # New version procedure
 ## New version pushed
 * `git tag -a stable/x.y.z -m <message>`
-* `git tag --delete stable/latest` - delete the local tag
-* `git push origin --delete stable/latest` - delete the remote tag
-* `git tag stable/latest` - create the local tag
-* `git push origin --tags`
-* 
+* `git tag -fa stable/latest -m "Update stable/latest to this commit"` - Update 'latest' tag
+* `git push origin stable/latest --force` - update origin
+
 ## New version pulled
-* `git checkout main`
-* `git tag --delete stable/latest` 
-* `git fetch`
 * `git checkout stable/latest`
