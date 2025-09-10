@@ -31,7 +31,7 @@ function roslog_del() {
 
 function del_pkg(){
     local pkg_name=$1
-    local ws_dir="$HOME/ws/$SELECTED_ROS_WS"
+    local ws_dir="$HOME/ws/$GST_SELECTED_ROS_WS"
 
     if [ -z "$pkg_name" ]; then
         log_error "A package name is required."
@@ -67,11 +67,11 @@ function del_pkg(){
 }
 
 function rospkg_del() {
-    if [ -z "$SELECTED_ROS_WS" ]; then
-        log_error "No ROS ('SELECTED_ROS_WS') workspace selected."
+    if [ -z "$GST_SELECTED_ROS_WS" ]; then
+        log_error "No ROS ('GST_SELECTED_ROS_WS') workspace selected."
         return 1
     fi
-    base_dir="$HOME/ws/${SELECTED_ROS_WS}"
+    base_dir="$HOME/ws/${GST_SELECTED_ROS_WS}"
 
     if [ $# -eq 0 ]; then
         log_error "At least one package name is required."
@@ -88,7 +88,7 @@ function set_ros_ws() {
     if [ -z "$1" ]; then
         if [ -f "$GST_ROS_CONF_FILE" ]; then
             source "$GST_ROS_CONF_FILE"
-            if [ -z "$SELECTED_ROS_WS" ]; then
+            if [ -z "$GST_SELECTED_ROS_WS" ]; then
                 log_error "ROS workspace not set in file $GST_ROS_CONF_FILE."
                 return 1
             fi
@@ -97,27 +97,27 @@ function set_ros_ws() {
             return 1
         fi
     else
-        export SELECTED_ROS_WS="$1"
+        export GST_SELECTED_ROS_WS="$1"
     fi
 
-    # from here on, SELECTED_ROS_WS is set, but not necessarily valid
-    if [ ! -d "$HOME/ws/$SELECTED_ROS_WS" ]; then
-        log_error "ROS workspace '$SELECTED_ROS_WS' does not exist."
+    # from here on, GST_SELECTED_ROS_WS is set, but not necessarily valid
+    if [ ! -d "$HOME/ws/$GST_SELECTED_ROS_WS" ]; then
+        log_error "ROS workspace '$GST_SELECTED_ROS_WS' does not exist."
         return 1
     fi
     
-    echo "export SELECTED_ROS_WS=$SELECTED_ROS_WS" >"$GST_ROS_CONF_FILE"
-    ROS_WS="$SELECTED_ROS_WS"
+    echo "export GST_SELECTED_ROS_WS=$GST_SELECTED_ROS_WS" >"$GST_ROS_CONF_FILE"
+    ROS_WS="$GST_SELECTED_ROS_WS"
     export $ROS_WS
-    log_info "ROS workspace set to '$SELECTED_ROS_WS'"
+    log_info "ROS workspace set to '$GST_SELECTED_ROS_WS'"
 }
 
 function ros_ws_selected() {
-    if [ -z "$SELECTED_ROS_WS" ]; then
-        log_error "No ROS ('SELECTED_ROS_WS') workspace selected."
+    if [ -z "$GST_SELECTED_ROS_WS" ]; then
+        log_error "No ROS ('GST_SELECTED_ROS_WS') workspace selected."
         return 1
     fi
-    echo "$SELECTED_ROS_WS"
+    echo "$GST_SELECTED_ROS_WS"
 }
 
 function cdws() {
@@ -135,11 +135,11 @@ function cdws() {
     fi
 
     if [ -z "$GIVEN_WS" ]; then
-        if [ -z "$SELECTED_ROS_WS" ]; then
-            log_error "No ROS ('SELECTED_ROS_WS') workspace selected."
+        if [ -z "$GST_SELECTED_ROS_WS" ]; then
+            log_error "No ROS ('GST_SELECTED_ROS_WS') workspace selected."
             return 1
         fi
-        cd "$HOME/ws/$SELECTED_ROS_WS"
+        cd "$HOME/ws/$GST_SELECTED_ROS_WS"
 
     else
         if [ ! -d "$HOME/ws/$GIVEN_WS" ]; then

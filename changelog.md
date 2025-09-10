@@ -51,3 +51,7 @@ Minor
 ## 1.3.0
 Minor
 * Script `create_stable_tag.sh` for ease of tag release
+
+### 1.4.0
+Minor
+* (set/get)_ros_ws commands fixed
