@@ -39,11 +39,11 @@ gst_version                 # Show version info
 
 ### ROS Tools (if ROS extension enabled)
 ```bash
-set_ros_ws /path/to/workspace    # Set workspace (any path)
-get_ros_ws                       # Show current workspace
-cdws [-s]                        # Navigate to workspace (optionally source)
-rsrc [-g]                        # Source workspace (optionally with Gazebo)
-rospkg_del pkg1 pkg2            # Delete package build artifacts
+gst_ros_set_ws /path/to/workspace    # Set workspace (any path)
+gst_ros_get_ws                       # Show current workspace
+cdws [-s]                            # Navigate to workspace (optionally source)
+rsrc [-g]                            # Source workspace (optionally with Gazebo)
+rospkg_del pkg1 pkg2                # Delete package build artifacts
 ```
 
 ## Configuration
