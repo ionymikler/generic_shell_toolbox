@@ -31,36 +31,42 @@ function roslog_del() {
 
 function del_pkg(){
     local pkg_name=$1
-    local ws_dir="$HOME/ws/$GST_SELECTED_ROS_WS"
+    
+    # Get current workspace (absolute path)
+    local ws_dir
+    ws_dir=$(gst_ros_get_ws)
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
 
     if [ -z "$pkg_name" ]; then
         log_error "A package name is required."
         return 1
     fi
 
-    build_dir="${ws_dir}/build/${package_name}"
-    install_dir="${ws_dir}/install/${package_name}"
-    log_dir="${ws_dir}/log/${package_name}"
+    local build_dir="${ws_dir}/build/${pkg_name}"
+    local install_dir="${ws_dir}/install/${pkg_name}"
+    local log_dir="${ws_dir}/log/${pkg_name}"
 
     if [ -d "$build_dir" ]; then
         log_info "Deleting $build_dir"
         rm -rf "$build_dir"
     else
-        log_warn "Build directory not found for $package_name"
+        log_warn "Build directory not found for $pkg_name"
     fi
 
     if [ -d "$install_dir" ]; then
         log_info "Deleting $install_dir"
         rm -rf "$install_dir"
     else
-        log_warn "Install directory not found for $package_name"
+        log_warn "Install directory not found for $pkg_name"
     fi
 
     if [ -d "$log_dir" ]; then
         log_info "Deleting $log_dir"
         rm -rf "$log_dir"
     else
-        log_warn "Log directory not found for $package_name"
+        log_warn "Log directory not found for $pkg_name"
     fi
 
 
@@ -71,7 +77,12 @@ function rospkg_del() {
         log_error "No ROS ('GST_SELECTED_ROS_WS') workspace selected."
         return 1
     fi
-    base_dir="$HOME/ws/${GST_SELECTED_ROS_WS}"
+    # Get current workspace (absolute path)
+    local base_dir
+    base_dir=$(gst_ros_get_ws)
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
 
     if [ $# -eq 0 ]; then
         log_error "At least one package name is required."
@@ -83,7 +94,7 @@ function rospkg_del() {
     done
 }
 
-function set_ros_ws() {
+function gst_ros_set_ws() {
     # if no argument, then source the config file, else set the config file
     if [ -z "$1" ]; then
         if [ -f "$GST_ROS_CONF_FILE" ]; then
@@ -100,19 +111,29 @@ function set_ros_ws() {
         export GST_SELECTED_ROS_WS="$1"
     fi
 
-    # from here on, GST_SELECTED_ROS_WS is set, but not necessarily valid
-    if [ ! -d "$HOME/ws/$GST_SELECTED_ROS_WS" ]; then
-        log_error "ROS workspace '$GST_SELECTED_ROS_WS' does not exist."
+    # Convert to absolute path (handles both relative and absolute inputs)
+    local full_path
+    if [ -d "$GST_SELECTED_ROS_WS" ]; then
+        full_path="$(realpath "$GST_SELECTED_ROS_WS")"
+    else
+        log_error "Directory '$GST_SELECTED_ROS_WS' does not exist"
         return 1
     fi
     
-    echo "export GST_SELECTED_ROS_WS=$GST_SELECTED_ROS_WS" >"$GST_ROS_CONF_FILE"
-    ROS_WS="$GST_SELECTED_ROS_WS"
-    export $ROS_WS
+    # Validate it's a ROS workspace
+    if [ ! -d "$full_path/src" ]; then
+        log_error "'$full_path' is not a valid ROS workspace (missing src/ directory)"
+        return 1
+    fi
+    
+    # Update the stored workspace to the absolute path
+    export GST_SELECTED_ROS_WS="$full_path"
+    
+    echo "export GST_SELECTED_ROS_WS='$GST_SELECTED_ROS_WS'" >"$GST_ROS_CONF_FILE"
     log_info "ROS workspace set to '$GST_SELECTED_ROS_WS'"
 }
 
-function ros_ws_selected() {
+function gst_ros_get_ws() {
     if [ -z "$GST_SELECTED_ROS_WS" ]; then
         log_error "No ROS ('GST_SELECTED_ROS_WS') workspace selected."
         return 1
@@ -134,26 +155,34 @@ function cdws() {
         SOURCE_AFTER_CD=true
     fi
 
+    local target_ws
     if [ -z "$GIVEN_WS" ]; then
-        if [ -z "$GST_SELECTED_ROS_WS" ]; then
-            log_error "No ROS ('GST_SELECTED_ROS_WS') workspace selected."
+        # Use currently selected workspace
+        target_ws=$(gst_ros_get_ws)
+        if [ $? -ne 0 ]; then
             return 1
         fi
-        cd "$HOME/ws/$GST_SELECTED_ROS_WS"
-
     else
-        if [ ! -d "$HOME/ws/$GIVEN_WS" ]; then
-            log_error "ROS workspace '$HOME/ws/$GIVEN_WS' does not exist."
+        # Convert given path to absolute path
+        if [ -d "$GIVEN_WS" ]; then
+            target_ws="$(realpath "$GIVEN_WS")"
+        else
+            log_error "Workspace '$GIVEN_WS' does not exist"
             return 1
         fi
-        cd "$HOME/ws/$GIVEN_WS"
+        
+        # Validate it's a ROS workspace
+        if [ ! -d "$target_ws/src" ]; then
+            log_error "'$target_ws' is not a valid ROS workspace"
+            return 1
+        fi
     fi
+
+    cd "$target_ws" || return 1
 
     if $SOURCE_AFTER_CD; then
         rsrc
     fi
 }
 
-alias get_ros_ws="ros_ws_selected"
-alias ROS_WS="ros_ws_selected"
 
