@@ -92,6 +92,8 @@ function set_ros_ws() {
                 log_error "ROS workspace not set in file $GST_ROS_CONF_FILE."
                 return 1
             fi
+            log_info "ROS workspace loaded: '$GST_SELECTED_ROS_WS'"
+            return 0
         else
             log_error "ROS workspace config file not found at '$GST_ROS_CONF_FILE'"
             return 1
