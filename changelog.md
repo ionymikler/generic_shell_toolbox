@@ -54,4 +54,8 @@ Minor
 
 ### 1.4.0
 Minor
-* (set/get)_ros_ws commands fixed
+* (set/get)_ros_ws commands fixed and renamed to gst_ros_(set/get)_ws
+
+### 1.4.1
+Minor
+* Fixed gst_ros_set_ws bug where loading from config would incorrectly re-validate and rewrite the config file

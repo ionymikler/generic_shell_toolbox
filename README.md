@@ -54,7 +54,7 @@ GST uses an environment-based configuration system with `.env` files. The toolbo
 
 ### Release Management
 ```bash
-./create_stable_tag.sh 1.4.0 "Release message"
+./create_stable_tag.sh x.y.z "<Release message>"
 ```
 
 ### Git Workflow
