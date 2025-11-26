@@ -29,6 +29,20 @@ A modular collection of shell utilities and tools that enhance the everyday deve
 ./install.bash -y -D        # Non-interactive with defaults
 ```
 
+### Updating
+If you installed GST via tarball (wget), you can update to the latest stable release:
+```bash
+./update_from_stable.sh     # Update to latest stable version
+```
+
+This will:
+- Download the latest `stable/latest` release
+- Create a backup of your current installation
+- Replace code while preserving your `.env` configuration files
+- Offer to keep or remove the backup after update
+
+**Note:** For git-based installations, use `git fetch && git checkout stable/latest` instead.
+
 ### Management
 ```bash
 gst_enable                  # Enable toolbox
