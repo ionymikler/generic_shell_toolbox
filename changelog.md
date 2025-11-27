@@ -59,3 +59,7 @@ Minor
 ### 1.4.1
 Minor
 * Fixed gst_ros_set_ws bug where loading from config would incorrectly re-validate and rewrite the config file
+
+### 1.5.0
+Major
+* Added code for updating the deployed codebase to a more update stable/latest tag
