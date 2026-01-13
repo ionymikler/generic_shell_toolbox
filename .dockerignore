@@ -1,0 +1,24 @@
+# Git repository (we'll have a clean copy in container)
+.git
+.gitignore
+
+# Environment files (should be created fresh in container)
+.env
+**/.env
+
+# Backlog and development files
+.backlog
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Test artifacts
+test_results
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
