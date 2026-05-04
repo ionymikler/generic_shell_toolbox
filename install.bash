@@ -7,10 +7,10 @@ source "${SCRIPT_PATH}/shell_utils/colored_shell.sh"
 
 source "${SCRIPT_PATH}/.make_env_file.sh"
 
-function set_PS1(){
-    local default_PS1="\[\e[38;5;47m\]\u\[\e[38;5;156m\]@\[\e[38;5;227m\]\h \[\e[38;5;231m\]\w \[\033[0m\]$ "
-    echo "export PS1='$default_PS1'" >> "$SCRIPT_PATH/.env"
-    echo "The default PS1 has been added to the .env file."
+function set_color_scheme(){
+    local scheme="${1:-dark_default}"
+    echo "export GST_PS1_COLOR_SCHEME='$scheme'" >> "$SCRIPT_PATH/.env"
+    echo "PS1 color scheme '$scheme' has been saved."
 }
 
 function add_to_bashrc(){
@@ -31,7 +31,7 @@ function show_help() {
     echo "Options:"
     echo "  -h, --help    Show this help message and exit"
     echo "  -y            Auto-answer 'yes' to all prompts (non-interactive mode)"
-    echo "  -D            Set default configuration (includes PS1 and bashrc integration)"
+    echo "  -D            Set default configuration (includes PS1 scheme and bashrc integration)"
     echo ""
     echo "Examples:"
     echo "  $0            # Interactive installation with prompts"
@@ -65,16 +65,24 @@ install_gst(){
 
     make_env_file
 
-    # decide if including a default PS1 configuration
-    local include_PS1="n"
-    
+    # decide PS1 color scheme
+    local _scheme_choice=""
+
     if [ "$SET_DEFAULT_CONFIG" == "true" ] || [ "$AUTO_YES" == "true" ]; then
-        include_PS1="y"
+        set_color_scheme "dark_default"
     else
-        read -p "* Do you want to include a default PS1 configuration? (y/n): " include_PS1
-    fi
-    if [ "$include_PS1" == "y" ]; then
-        set_PS1
+        echo "* Available PS1 color schemes:"
+        echo "    1) dark_default   - dark terminal, no bold  (default)"
+        echo "    2) dark_bold      - dark terminal, bold"
+        echo "    3) light_default  - light terminal, no bold"
+        echo "    4) light_bold     - light terminal, bold"
+        read -p "* Select a PS1 color scheme (1-4, press Enter for default): " _scheme_choice
+        case "$_scheme_choice" in
+            2) set_color_scheme "dark_bold" ;;
+            3) set_color_scheme "light_default" ;;
+            4) set_color_scheme "light_bold" ;;
+            *) set_color_scheme "dark_default" ;;
+        esac
     fi
 
     # decide if adding the 'generic_shell_toolbox.sh' to the bashrc file
