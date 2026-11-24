@@ -7,8 +7,15 @@ source "${SCRIPT_PATH}/shell_utils/colored_shell.sh"
 
 source "${SCRIPT_PATH}/.make_env_file.sh"
 
+function remove_PS1(){
+    # Drop any PS1 written by an earlier install, so the user's own PS1 (from .bashrc) is kept.
+    # The git addon is still appended to it at load time.
+    sed -i "/^export PS1=/d" "$SCRIPT_PATH/.env"
+}
+
 function set_PS1(){
     local default_PS1="\[\e[38;5;47m\]\u\[\e[38;5;156m\]@\[\e[38;5;227m\]\h \[\e[38;5;231m\]\w \[\033[0m\]$ "
+    remove_PS1 # avoid duplicate lines on reinstall
     echo "export PS1='$default_PS1'" >> "$SCRIPT_PATH/.env"
     echo "The default PS1 has been added to the .env file."
 }
@@ -63,7 +70,7 @@ install_gst(){
     local _version=$(cat "${SCRIPT_PATH}/version.yaml")
     log_info_blue "Installing the 'generic_shell_toolbox' $_version... \n"
 
-    make_env_file
+    make_env_file "$@"
 
     # decide if including a default PS1 configuration
     local include_PS1="n"
@@ -75,6 +82,8 @@ install_gst(){
     fi
     if [ "$include_PS1" == "y" ]; then
         set_PS1
+    else
+        remove_PS1
     fi
 
     # decide if adding the 'generic_shell_toolbox.sh' to the bashrc file

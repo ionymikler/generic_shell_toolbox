@@ -22,7 +22,7 @@ function make_env_file(){
         source "$_script_dir/.env"
         log_warn "file .env already exists in $_script_dir/.env"
 
-        if [["$replace_env" == "n"]]; then
+        if [[ "$replace_env" == "n" ]]; then
             read -p "* Replace existing env file '${_script_dir}'? (y/n): " replace_env
         fi
 
