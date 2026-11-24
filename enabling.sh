@@ -3,8 +3,8 @@
 
 # this script is used to define aliases
 
-_env="$GENERIC_SHELL_TOOLBOX_LOCATION/.env"
 function gst_enable(){
+    local _env="$GENERIC_SHELL_TOOLBOX_LOCATION/.env"
     echo "Enabling Generic-ToolBox"
 
     # script dir is the first argument passed to the function
@@ -34,7 +34,7 @@ function gst_enable(){
 
 function gst_disable(){
     echo "Disabling Generic-ToolBox"
-    _env="$GENERIC_SHELL_TOOLBOX_LOCATION/.env"
+    local _env="$GENERIC_SHELL_TOOLBOX_LOCATION/.env"
     if [ -f "$_env" ]; then
         sed -i 's/TOOLBOX_ENABLED=.*/TOOLBOX_ENABLED=false/' "$_env"
     else
@@ -46,7 +46,7 @@ function gst_disable(){
     source ~/.bashrc
 }
 
-function gst_sourcing(){
+function _gst_sourcing(){
     if [ "${TOOLBOX_ENABLED}" = "true" ]; then
         export GST_SOURCE_FILE="$GENERIC_SHELL_TOOLBOX_LOCATION/generic_shell_toolbox.sh"
     else
@@ -54,7 +54,8 @@ function gst_sourcing(){
     fi
 }
 
-gst_sourcing
+_gst_sourcing
+unset -f _gst_sourcing
 # function run_command(){
 #     local _env=$1
 #     _commands=(
