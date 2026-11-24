@@ -22,10 +22,17 @@ function set_PS1(){
 
 function add_to_bashrc(){
     local _sourcing_file_path="$HOME/.bashrc"
-    echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> $_sourcing_file_path
+    local _source_line="source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh"
 
-    # remember in env file
+    # remember in env file (replace, so reinstalls do not add duplicate lines)
+    sed -i "/^SOURCING_FILE_PATH=/d" "$SCRIPT_PATH/.env"
     echo "SOURCING_FILE_PATH=$_sourcing_file_path" >> "$SCRIPT_PATH/.env"
+
+    if grep -qxF "$_source_line" "$_sourcing_file_path" 2>/dev/null; then
+        log_info_green "The 'generic_shell_toolbox.sh' is already in your bashrc file. Nothing added."
+        return 0
+    fi
+    echo "$_source_line" >> "$_sourcing_file_path"
 
     log_info_green "The 'generic_shell_toolbox.sh' has been added to your bashrc file. Open a new terminal to see the changes."
 }

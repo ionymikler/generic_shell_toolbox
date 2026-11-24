@@ -23,7 +23,9 @@ main(){
     local GIT_REPO_COLOR="${DARK_RED}"
     local GIT_COMMIT_COLOR="${DARK_YELLOW}"
 
-    export PS1="$PS1${GIT_REPO_COLOR}(\$(get_repository_name):${GIT_BRANCH_COLOR}\$(parse_git_branch)${GIT_COMMIT_COLOR}\$(get_last_commit_suffix)${GIT_BRANCH_COLOR})${NO_COLOR} \n> "
+    # Colour codes are wrapped in \[ \] so bash does not count them as visible
+    # characters; otherwise long command lines wrap and redraw incorrectly.
+    export PS1="$PS1\[${GIT_REPO_COLOR}\](\$(get_repository_name):\[${GIT_BRANCH_COLOR}\]\$(parse_git_branch)\[${GIT_COMMIT_COLOR}\]\$(get_last_commit_suffix)\[${GIT_BRANCH_COLOR}\])\[${NO_COLOR}\] \n> "
 
 }
 
