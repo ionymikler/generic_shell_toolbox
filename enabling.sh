@@ -54,11 +54,7 @@ function gst_sourcing(){
     fi
 }
 
-function main(){
-    gst_sourcing
-}
-
-main
+gst_sourcing
 # function run_command(){
 #     local _env=$1
 #     _commands=(

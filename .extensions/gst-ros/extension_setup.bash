@@ -1,25 +1,14 @@
 #!/usr/bin/env bash
 # Created by Jonathan Mikler on 27/June/24
 
-SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-SCRIPT_DIR=$(realpath "$SCRIPT_DIR" )
-
-function source_extension_config(){
-    source "${SCRIPT_DIR}/extension.config"
+# Wrapped in a function so the path stays local and nothing leaks into the user's shell.
+_gst_ros_setup(){
+    local dir
+    dir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+    source "${dir}/utils/utils.sh"
+    source "${dir}/extension.config"
+    source "${dir}/addons/addons.sh"
 }
 
-function source_utils(){
-    source "${SCRIPT_DIR}/utils/utils.sh"
-}
-
-function source_addons(){
-    source "${SCRIPT_DIR}/addons/addons.sh"
-}
-
-main(){
-    source_utils
-    source_extension_config
-    source_addons
-}
-
-main
+_gst_ros_setup
+unset -f _gst_ros_setup

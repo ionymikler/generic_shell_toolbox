@@ -5,7 +5,7 @@
 
 
 
-main(){
+_gst_configure_PS1(){
 
     local RED='\033[01;31m'
     local DARK_RED='\033[00;31m'
@@ -27,6 +27,7 @@ main(){
 
 }
 
-main
+_gst_configure_PS1
+unset -f _gst_configure_PS1
 
 
