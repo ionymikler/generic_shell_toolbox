@@ -7,18 +7,32 @@ source "${SCRIPT_PATH}/shell_utils/colored_shell.sh"
 
 source "${SCRIPT_PATH}/.make_env_file.sh"
 
+function remove_PS1(){
+    # Drop any PS1 written by an earlier install, so the user's own PS1 (from .bashrc) is kept.
+    # The git addon is still appended to it at load time.
+    sed -i "/^export PS1=/d" "$SCRIPT_PATH/.env"
+}
+
 function set_PS1(){
     local default_PS1="\[\e[38;5;47m\]\u\[\e[38;5;156m\]@\[\e[38;5;227m\]\h \[\e[38;5;231m\]\w \[\033[0m\]$ "
+    remove_PS1 # avoid duplicate lines on reinstall
     echo "export PS1='$default_PS1'" >> "$SCRIPT_PATH/.env"
     echo "The default PS1 has been added to the .env file."
 }
 
 function add_to_bashrc(){
     local _sourcing_file_path="$HOME/.bashrc"
-    echo "source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh" >> $_sourcing_file_path
+    local _source_line="source ${GENERIC_SHELL_TOOLBOX_LOCATION}/generic_shell_toolbox.sh"
 
-    # remember in env file
+    # remember in env file (replace, so reinstalls do not add duplicate lines)
+    sed -i "/^SOURCING_FILE_PATH=/d" "$SCRIPT_PATH/.env"
     echo "SOURCING_FILE_PATH=$_sourcing_file_path" >> "$SCRIPT_PATH/.env"
+
+    if grep -qxF "$_source_line" "$_sourcing_file_path" 2>/dev/null; then
+        log_info_green "The 'generic_shell_toolbox.sh' is already in your bashrc file. Nothing added."
+        return 0
+    fi
+    echo "$_source_line" >> "$_sourcing_file_path"
 
     log_info_green "The 'generic_shell_toolbox.sh' has been added to your bashrc file. Open a new terminal to see the changes."
 }
@@ -63,7 +77,7 @@ install_gst(){
     local _version=$(cat "${SCRIPT_PATH}/version.yaml")
     log_info_blue "Installing the 'generic_shell_toolbox' $_version... \n"
 
-    make_env_file
+    make_env_file "$@"
 
     # decide if including a default PS1 configuration
     local include_PS1="n"
@@ -75,6 +89,8 @@ install_gst(){
     fi
     if [ "$include_PS1" == "y" ]; then
         set_PS1
+    else
+        remove_PS1
     fi
 
     # decide if adding the 'generic_shell_toolbox.sh' to the bashrc file
