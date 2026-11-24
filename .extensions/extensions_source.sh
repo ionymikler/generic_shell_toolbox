@@ -1,22 +1,15 @@
 #!/usr/bin/env bash
 # Created by Jonathan Mikler on 27/June/24
 
-
 # compilation of all extensions of GST
-function source_extention(){
-    source "${GENERIC_SHELL_TOOLBOX_LOCATION}/.extensions/$1/extension_setup.bash"
-}
-
-SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-EXTENSIONS=(
-    "gst-ros"
-    )
-
-main(){
-    _DIR=$(realpath "$SCRIPT_DIR" )
-    source "$_DIR/gst-ros/extension_setup.bash"
+# Wrapped in a function so the path stays local and nothing leaks into the user's shell.
+_gst_load_extensions(){
+    local dir
+    dir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+    source "${dir}/gst-ros/extension_setup.bash"
 
     echo "[GST] Extensions loaded"
 }
 
-main
+_gst_load_extensions
+unset -f _gst_load_extensions

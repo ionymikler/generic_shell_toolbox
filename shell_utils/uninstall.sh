@@ -2,8 +2,7 @@
 # Created by Jonathan Mikler on 29/May/24
 
 
-SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
-source "${SCRIPT_DIR}/colored_shell.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/colored_shell.sh"
 
 function delete_text_from_file(){
     local _text=$1
